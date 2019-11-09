@@ -1,0 +1,48 @@
+{% extends "../layout.html" %}
+
+{% block content %}
+<div class="card mx-auto">
+  <div class="card-body">
+    {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    {% if next %}
+        {% if user.is_authenticated %}
+        <p>Your account doesn't have access to this page. To proceed,
+        please login with an account that has access.</p>
+        {% else %}
+        <p>Please login to see this page.</p>
+        {% endif %}
+    {% endif %}
+
+    <form class="form-signin" method="post" action="{% url 'login' %}">
+      <img class="mb-4" src="https://upload.wikimedia.org/wikipedia/commons/b/be/Lineage_OS_Logo.png" alt="" width="130">
+      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+      {% csrf_token %}
+      <table>
+      <tr>
+          <td>{{ form.username.label_tag }}</td>
+          <td>{{ form.username }}</td>
+      </tr>
+      <tr>
+          <td>{{ form.password.label_tag }}</td>
+          <td>{{ form.password }}</td>
+      </tr>
+      </table>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      <input type="hidden" name="next" value="{{ next }}">
+      <p><a href="{% url 'signup'%}">Create a new account! </a></p>
+      <p>Forgot Password? <a href="{% url 'password_reset'%}">Click Here</a></p>
+      <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
+    </form>
+  </div>
+  </div>
+
+
+
+
+
+
+
+{% endblock %}
